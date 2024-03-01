@@ -1,26 +1,24 @@
 # Use the official PHP 8.3 image (Alpine) for a small image
 FROM php:8.3-fpm-alpine
 
+# Install system dependencies
+RUN apk update && apk add --no-cache \
+    linux-headers \
+    && docker-php-ext-install sockets \
+    && rm -rf /var/cache/apk/*
+
 # Install Composer
-RUN apk add --no-cache curl \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Set the working directory
 WORKDIR /var/www/html
 
-# Install PDO extension for SQLite
-RUN docker-php-ext-install pdo
-
-# Enable sockets extension in PHP configuration
-RUN echo "extension=sockets" > /usr/local/etc/php/conf.d/sockets.ini
-
 # Copy the application code
 COPY . .
 
+# Set permissions to allow Laravel to write to the storage folder
+RUN chgrp -R www-data storage bootstrap/cache \
+    && chmod -R ug+rwx storage bootstrap/cache
+
 # Install dependencies
-RUN composer install --no-interaction --no-plugins --no-scripts --prefer-dist
-
-# No need to expose ports specifically for SQLite
-
-# Optionally, you may want to set up a volume for SQLite data files if needed
-VOLUME /var/www/html/storage/sqlite
+#RUN composer install --no-interaction --no-plugins --no-scripts --prefer-dist
