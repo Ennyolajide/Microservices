@@ -11,9 +11,9 @@ Getting Started
 ```bash
 php artisan key:generate
 ```
-5. Run migration:
+5. Create db file and run migration:
 ```bash
-php artisan migrate
+touch database/database.sqlite && php artisan migrate
 ```
 
 Running Tests
