@@ -15,7 +15,7 @@ For more detailed information about each service, please refer to their respecti
 3. Install dependencies for each service:
    - notifications-service: Navigate to the `notifications-service` directory and run `composer install`.
    - users-service: Navigate to the `users-service` directory and run `composer install`.
-4. Rename `example.env` to `.env` for each service and configure your environment variables.
+4. Rename `example.env` to `.env` for each service.
 5. Generate application key for both services by running:
 ```bash
 php artisan key:generate
