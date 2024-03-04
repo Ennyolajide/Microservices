@@ -12,7 +12,7 @@ RUN apk update && apk add --no-cache \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Set the working directory
-WORKDIR /var/www/ht
+WORKDIR /var/www/html
 
 # Copy the application code
 COPY . .
@@ -21,6 +21,7 @@ COPY . .
 RUN touch database/database.sqlite \
     && chown -R www-data:www-data database
 
-# Set permissions to allow Laravel to write to the storage folder
-RUN chgrp -R www-data storage bootstrap/cache \
-    && chmod -R ug+rwx storage bootstrap/cache
+# Install dependencies
+#RUN composer install --no-interaction --no-plugins --no-scripts --prefer-dist
+
+
