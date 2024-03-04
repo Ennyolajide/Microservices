@@ -16,6 +16,15 @@ For more detailed information about each service, please refer to their respecti
    - notifications-service: Navigate to the `notifications-service` directory and run `composer install`.
    - users-service: Navigate to the `users-service` directory and run `composer install`.
 4. Rename `example.env` to `.env` for each service and configure your environment variables.
+5. Generate application key for both services by running:
+```bash
+php artisan key:generate
+```
+6. For users-service only run migration:
+```bash
+php artisan migrate
+```
+
 
 ## Running Tests
 To run tests for each service, navigate to the respective directory and execute the following command:
