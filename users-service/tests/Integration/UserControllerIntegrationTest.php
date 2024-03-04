@@ -19,6 +19,9 @@ class UserControllerIntegrationTest extends TestCase
         $this->testConnection = AmqpService::getConnection();
         $this->testChannel = $this->testConnection->channel();
         $this->testChannel->queue_declare('user_events', false, true, false, false);
+
+        // Purge the queue to ensure it's empty before each test
+        $this->testChannel->queue_purge('user_events');
     }
 
     protected function tearDown(): void
@@ -37,8 +40,8 @@ class UserControllerIntegrationTest extends TestCase
         $response->assertStatus(201)
                  ->assertJsonFragment(['message' => 'User created']);
 
-       // Consume the message
-       $callback = function ($message) use ($data) {
+        // Consume the message
+        $callback = function ($message) use ($data) {
             $payload = json_decode($message->body, true);
 
             // Assertions
@@ -49,7 +52,6 @@ class UserControllerIntegrationTest extends TestCase
             $message->ack();
         };
 
-        //
         $this->testChannel->basic_consume('user_events', '', false, false, false, false, $callback);
 
         // Process messages (adjust timeout as needed)
