@@ -17,7 +17,8 @@ WORKDIR /var/www/html
 COPY . .
 
 # Set permissions to allow Laravel to write to the storage folder
-RUN chgrp -R www-data storage bootstrap/cache \
+RUN chgrp -R www-data storage \
+    && chgrp -R www-data storage bootstrap/cache \
     && chmod -R ug+rwx storage bootstrap/cache
 
 # Install dependencies

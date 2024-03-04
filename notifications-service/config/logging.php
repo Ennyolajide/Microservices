@@ -126,6 +126,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'user_events' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/user_events.log'), // Path to your custom log file
+            'level' => 'info', // Logging level for this channel
+            'days' => 7,
+        ],
     ],
 
 ];
