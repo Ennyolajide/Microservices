@@ -20,7 +20,7 @@ For more detailed information about each service, please refer to their respecti
 ```bash
 php artisan key:generate
 ```
-6. For users-service only create db file and run migration:
+6. For users-service only create db file and run migration (for users-service only):
 ```bash
 touch database/database.sqlite && php artisan migrate
 ```
